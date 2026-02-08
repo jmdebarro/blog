@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Rad Blog</title>
+  </head>
+  <body>
+    
+
+    
+<header class="site-header">
+  <h1>DeBarro</h1>
+</header>
+
+<main class="posts-wrapper">
+  <div class="posts-grid">
+    
+      <article class="post-card">
+        
+          <img src="/assets/dnspi.jpg" alt="DNS Sinkhole" class="post-image">
+        
+        <h2><a href="/posts/init_post/">DNS Sinkhole</a></h2>
+      </article>
+    
+  </div>
+</main>
+
+
+<style>
+  /* Header */
+  .site-header {
+    text-align: center;
+    background-color: #565c70;
+    padding: 3rem 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .site-header h1 {
+    margin: 0;
+    font-size: 3rem;
+    color: #333;
+  }
+
+  /* Wrapper to center the grid and restrict width */
+  .posts-wrapper {
+    display: flex;
+    justify-content: center; /* center the grid */
+  }
+
+  /* Grid with 3 columns */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* exactly 3 columns per row */
+    gap: 2rem;
+    width: 60vw; /* 3/5 of viewport width */
+  }
+
+  /* Individual post cards */
+  .post-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    background-color: #f9f9f9;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  }
+
+.post-image {
+  background-color: #eee;
+  height: 150px;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 0.9rem;
+  object-fit: cover;
+}
+
+.post-card img.post-image {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+  .post-card h2 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .post-card a {
+    color: #0066cc;
+    text-decoration: none;
+  }
+
+  .post-card a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive: collapse to 2/1 column on smaller screens */
+  @media (max-width: 900px) {
+    .posts-grid {
+      grid-template-columns: repeat(2, 1fr);
+      width: 80vw;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .posts-grid {
+      grid-template-columns: 1fr;
+      width: 90vw;
+    }
+  }
+</style>
+
+  </body>
+</html>
