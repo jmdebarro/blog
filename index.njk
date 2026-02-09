@@ -1,16 +1,16 @@
 ---
 layout: base.njk
-title: Jonathan DeBarro's
+title: Jonathan DeBarro's Blog
 templateEngineOverride: njk
 ---
 
 <header class="site-header">
-  <h1>The Shade</h1>
+  <h1>Just One More Course</h1>
+  <p class="tagline">You're one course away from being a millionaire...</p>
   <nav>
     <a href="https://www.linkedin.com/in/jonathanmd/">LinkedIn</a>
     <a href="https://github.com/jmdebarro">GitHub</a>
   </nav>
-  <p class="tagline">We can just do things...</p>
 </header>
 
 <!-- Divider bar under header -->
@@ -35,7 +35,7 @@ templateEngineOverride: njk
 /* Header */
 .site-header {
   text-align: center;
-  padding: 3rem 1rem;
+  padding: 2rem 1rem; /* reduced from 3rem to 2rem to shrink space above the bar */
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
@@ -43,12 +43,12 @@ templateEngineOverride: njk
 .site-header h1 {
   margin: 0.5rem 0;
   font-size: 3rem;
-  color: #000; /* changed to black */
+  color: #000; /* black title */
 }
 
 .site-header nav a {
   margin: 0 1rem;
-  color: #000; /* black links */
+  color: #1da1f2; /* light blue links */
   text-decoration: none;
   font-weight: 500;
 }
@@ -68,7 +68,7 @@ templateEngineOverride: njk
   width: 80%;
   margin: 0 auto;
   height: 4px;
-  background-color: #8b8a8a; /* changed to black */
+  background-color: #8b8a8a; /* subtle gray divider */
   margin-bottom: 3rem;
   border-radius: 2px;
 }
