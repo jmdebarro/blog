@@ -1,12 +1,20 @@
 ---
 layout: base.njk
-title: Jonathan DeBarro's Blog
+title: Jonathan DeBarro's
 templateEngineOverride: njk
 ---
 
 <header class="site-header">
-  <h1>DeBarro</h1>
+  <h1>The Shade</h1>
+  <nav>
+    <a href="https://www.linkedin.com/in/jonathanmd/">LinkedIn</a>
+    <a href="https://github.com/jmdebarro">GitHub</a>
+  </nav>
+  <p class="tagline">We can just do things...</p>
 </header>
+
+<!-- Divider bar under header -->
+<div class="header-divider"></div>
 
 <main class="posts-wrapper">
   <div class="posts-grid">
@@ -23,97 +31,125 @@ templateEngineOverride: njk
   </div>
 </main>
 
-
 <style>
-  /* Header */
-  .site-header {
-    text-align: center;
-    background-color: #565c70;
-    padding: 3rem 1rem;
-    margin-bottom: 2rem;
-  }
+/* Header */
+.site-header {
+  text-align: center;
+  padding: 3rem 1rem;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
 
-  .site-header h1 {
-    margin: 0;
-    font-size: 3rem;
-    color: #333;
-  }
+.site-header h1 {
+  margin: 0.5rem 0;
+  font-size: 3rem;
+  color: #000; /* changed to black */
+}
 
-  /* Wrapper to center the grid and restrict width */
-  .posts-wrapper {
-    display: flex;
-    justify-content: center; /* center the grid */
-  }
+.site-header nav a {
+  margin: 0 1rem;
+  color: #000; /* black links */
+  text-decoration: none;
+  font-weight: 500;
+}
 
-  /* Grid with 3 columns */
-  .posts-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); /* exactly 3 columns per row */
-    gap: 2rem;
-    width: 60vw; /* 3/5 of viewport width */
-  }
+.site-header nav a:hover {
+  text-decoration: underline;
+}
 
-  /* Individual post cards */
-  .post-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-    background-color: #f9f9f9;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+.site-header .tagline {
+  margin-top: 0.5rem;
+  font-style: normal; /* remove italic */
+  color: #000; /* black tagline */
+}
 
-  .post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-  }
+/* Divider under header */
+.header-divider {
+  width: 80%;
+  margin: 0 auto;
+  height: 4px;
+  background-color: #8b8a8a; /* changed to black */
+  margin-bottom: 3rem;
+  border-radius: 2px;
+}
 
+/* Wrapper to center the grid */
+.posts-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Grid with 3 columns, wider cards */
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  width: 80vw; /* 4/5 of viewport width */
+}
+
+/* Individual post cards */
+.post-card {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  background-color: #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.post-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+}
+
+/* Post image box */
 .post-image {
-  background-color: #eee;
-  height: 150px;
-  margin-bottom: 1rem;
-  border-radius: 4px;
+  background-color: #f0f0f0;
+  height: 250px; /* taller */
+  margin-bottom: 1.5rem;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #888;
-  font-size: 0.9rem;
+  color: #aaa;
+  font-size: 0.95rem;
   object-fit: cover;
 }
 
 .post-card img.post-image {
   width: 100%;
-  height: 150px;
+  height: 250px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 10px;
 }
 
-  .post-card h2 {
-    margin: 0;
-    font-size: 1.2rem;
-  }
+.post-card h2 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: #333;
+}
 
-  .post-card a {
-    color: #0066cc;
-    text-decoration: none;
-  }
+.post-card a {
+  color: #337ab7;
+  text-decoration: none;
+}
 
-  .post-card a:hover {
-    text-decoration: underline;
-  }
+.post-card a:hover {
+  text-decoration: underline;
+}
 
-  /* Responsive: collapse to 2/1 column on smaller screens */
-  @media (max-width: 900px) {
-    .posts-grid {
-      grid-template-columns: repeat(2, 1fr);
-      width: 80vw;
-    }
+/* Responsive: collapse to 2/1 column on smaller screens */
+@media (max-width: 1100px) {
+  .posts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 90vw;
   }
+}
 
-  @media (max-width: 600px) {
-    .posts-grid {
-      grid-template-columns: 1fr;
-      width: 90vw;
-    }
+@media (max-width: 700px) {
+  .posts-grid {
+    grid-template-columns: 1fr;
+    width: 95vw;
   }
+}
 </style>
