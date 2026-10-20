@@ -38,6 +38,21 @@ button[aria-pressed="true"]{border-color:var(--glyph);}
 .hint{margin-left:auto;}
 @media (max-width:640px){.hint{display:none;}}
 html.embed .hud{display:none}
+/* Music player: rounded bar in the bottom strip, play button left, seekable progress line right */
+.player{display:flex;align-items:center;gap:10px;flex:1 1 220px;max-width:380px;margin:0 auto;height:40px;padding:0 14px 0 5px;
+  background:#000;border:1px solid var(--line);border-radius:999px;pointer-events:auto;}
+.player:hover{border-color:rgba(255,255,255,.4);}
+.player button{flex:none;width:30px;height:30px;padding:0;border-radius:50%;display:grid;place-items:center;}
+.player .pause,.player.playing .play{display:none;}
+.player.playing .pause{display:block;}
+.player input{flex:1;min-width:0;height:20px;margin:0;background:none;cursor:pointer;-webkit-appearance:none;appearance:none;--p:0%;}
+.player input::-webkit-slider-runnable-track{height:2px;border-radius:1px;background:linear-gradient(to right,var(--glyph) var(--p),var(--line) var(--p));}
+.player input::-webkit-slider-thumb{-webkit-appearance:none;width:10px;height:10px;margin-top:-4px;border-radius:50%;background:var(--glyph);border:0;}
+.player input::-moz-range-track{height:2px;border-radius:1px;background:var(--line);}
+.player input::-moz-range-progress{height:2px;border-radius:1px;background:var(--glyph);}
+.player input::-moz-range-thumb{width:10px;height:10px;border-radius:50%;background:var(--glyph);border:0;}
+.player input:focus-visible{outline:2px solid var(--glyph);outline-offset:4px;border-radius:2px;}
+.player .left{flex:none;min-width:5ch;text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.06em;}
 </style>
 </head>
 <body>
@@ -46,6 +61,15 @@ html.embed .hud{display:none}
 <div class="hud bot">
   <a class="btn" href="/">← debarro.dev</a>
   <button id="nxt">Next</button>
+  <div class="player" role="group" aria-label="Music">
+    <button id="play" type="button" aria-label="Play">
+      <svg class="play" width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><path d="M1 1.2v9.6a.6.6 0 0 0 .9.5l7.6-4.8a.6.6 0 0 0 0-1L1.9.7a.6.6 0 0 0-.9.5z" fill="currentColor"/></svg>
+      <svg class="pause" width="10" height="12" viewBox="0 0 10 12" aria-hidden="true"><rect x="1" y="1" width="2.6" height="10" rx=".6" fill="currentColor"/><rect x="6.4" y="1" width="2.6" height="10" rx=".6" fill="currentColor"/></svg>
+    </button>
+    <input id="seek" type="range" min="0" max="0" step="1" value="0" aria-label="Song position">
+    <span class="left" id="left">--:--</span>
+  </div>
+  <audio id="song" src="/collage/song.m4a" preload="none"></audio>
   <span class="hint">→ · next</span>
 </div>
 
@@ -248,8 +272,27 @@ function frame() {
 /* ---------- wiring ---------- */
 document.getElementById('nxt').addEventListener('click', () => go((cur + 1) % figs.length));
 addEventListener('keydown', (ev) => {
-  if (ev.key === 'ArrowRight') go((cur + 1) % figs.length);
+  if (ev.key === 'ArrowRight' && ev.target.type !== 'range') go((cur + 1) % figs.length);
 });
+
+/* ---------- music ---------- */
+const song = document.getElementById('song'), player = document.querySelector('.player'),
+  playBtn = document.getElementById('play'), seek = document.getElementById('seek'), left = document.getElementById('left');
+const clock = (s) => { s = Math.max(0, Math.round(s)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+function showTime(t) {
+  const d = song.duration; if (!isFinite(d)) return;
+  seek.max = d; seek.value = t; seek.style.setProperty('--p', `${t / d * 100}%`);
+  left.textContent = `-${clock(d - t)}`;
+  seek.setAttribute('aria-valuetext', `${clock(t)} of ${clock(d)}`);
+}
+if (!document.documentElement.classList.contains('embed')) song.preload = 'metadata';   // the homepage band never needs the song
+['loadedmetadata', 'durationchange', 'timeupdate'].forEach((e) => song.addEventListener(e, () => showTime(song.currentTime)));
+song.addEventListener('play', () => { player.classList.add('playing'); playBtn.setAttribute('aria-label', 'Pause'); });
+song.addEventListener('pause', () => { player.classList.remove('playing'); playBtn.setAttribute('aria-label', 'Play'); });
+song.addEventListener('ended', () => { song.currentTime = 0; });
+playBtn.addEventListener('click', () => { song.paused ? song.play().catch(() => {}) : song.pause(); });
+seek.addEventListener('input', () => { song.currentTime = +seek.value; showTime(+seek.value); });
+
 let rt; addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(resize, 150); });
 
 const loadAll = Promise.all(SOURCES.map((o) => { const i = new Image(); i.src = o.src; i.fx = o.fx; i.fy = o.fy; return i.decode().then(() => i); }));
