@@ -50,6 +50,7 @@
 
       .framed { padding: 10px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.9); }
       .framed img { display: block; width: 100%; object-fit: cover; border-radius: 8px; filter: grayscale(0.85) contrast(1.1) brightness(0.82); }
+      .framed img[src$=".svg"] { object-fit: contain; filter: none; }   /* drawn art: keep its colors, never crop */
 
       .btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; background: var(--ground); border: 1px solid var(--line-strong); border-radius: 6px; color: var(--text); font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
       .btn:hover { border-color: var(--accent); color: var(--text); }

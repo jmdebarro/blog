@@ -1,12 +1,13 @@
 ---
 title: DNS Sinkhole in C
+date: 2026-02-08
 description: How a lookup travels from your browser through recursive resolvers, root, TLD and authoritative nameservers, and how I built a sinkhole on a Raspberry Pi.
 topics: Networking · C
-imageAlt: Raspberry Pi 3 on a desk with power and HDMI cables attached
+imageAlt: ASCII diagram of a Raspberry Pi 3 Model B+ seen from above, showing the GPIO header, CPU, USB and Ethernet ports
 imageCaption: The Raspberry Pi that runs the sinkhole
 layout: post.njk
 tags: posts
-image: /assets/dnspi.jpg
+image: /assets/dnspi.svg
 ---
 
 ## What is DNS?
