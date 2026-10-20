@@ -24,10 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -44,6 +44,12 @@ jobs:
           printf '%s\n' "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           printf '%s\n' "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          # Show which server keys GitHub will trust (public fingerprints only)
+          if ! ssh-keygen -lf ~/.ssh/known_hosts; then
+            echo "::error::DEPLOY_KNOWN_HOSTS is empty or invalid. Set it from: ssh-keyscan -p $DEPLOY_PORT $DEPLOY_HOST"
+            exit 1
+          fi
+          grep -q "\[$DEPLOY_HOST\]:$DEPLOY_PORT" ~/.ssh/known_hosts || echo "::warning::DEPLOY_KNOWN_HOSTS has no entry for [$DEPLOY_HOST]:$DEPLOY_PORT. Was ssh-keyscan run with -p $DEPLOY_PORT?"
 
       - name: Upload to the VPS
         run: |
