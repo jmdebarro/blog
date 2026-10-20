@@ -12,6 +12,7 @@ templateEngineOverride: njk
   .hero-bar { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; pointer-events: none; }
   .hero-bar .fig { background: var(--ground); padding: 8px 12px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--muted); }
   .hero-bar .btn { pointer-events: auto; }
+  .hero-bar .btn.icon { width: 44px; padding: 0; justify-content: center; }
   @media (max-width: 600px) { .hero-bar .fig { display: none; } .hero-bar { justify-content: flex-end; } }
   .hero-bar svg path { stroke: var(--accent); }
 
@@ -46,9 +47,8 @@ templateEngineOverride: njk
   <a class="hero-open" href="/collage/" aria-label="Open the ASCII collage full screen"></a>
   <div class="hero-bar">
     <span class="fig">Glyphshift · five paintings, redrawn in ASCII</span>
-    <a class="btn" href="/collage/">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8.5 1.5h4v4M5.5 12.5h-4v-4M12.5 1.5L8 6M1.5 12.5L6 8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Expand collage
+    <a class="btn icon" href="/collage/" aria-label="Expand the collage" title="Expand">
+      <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8.5 1.5h4v4M5.5 12.5h-4v-4M12.5 1.5L8 6M1.5 12.5L6 8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </a>
   </div>
 </section>
