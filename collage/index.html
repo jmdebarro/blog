@@ -253,7 +253,8 @@ function plan(A, B) {
 }
 function go(next) {
   if (phase === 'trans' || figs.length < 2 || next === cur) return;
-  sprites = plan(figs[cur].cells, figs[next].cells); cur = next; phase = 'trans'; phaseStart = now(); updateHud();
+  sprites = plan(figs[cur].cells, figs[next].cells); cur = next; phase = 'trans'; phaseStart = now();
+  setTimeout(updateHud, (SPREAD + MOVE) * 600);   // relabel once the new image has mostly formed
 }
 function updateHud() {
   document.getElementById('fig').textContent = `${String(cur + 1).padStart(2, '0')} / ${String(figs.length).padStart(2, '0')}`;
