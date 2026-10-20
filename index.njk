@@ -1,155 +1,98 @@
 ---
 layout: base.njk
-title: Jonathan DeBarro's Blog
+title: Jonathan DeBarro
+description: Writing and projects by Jonathan DeBarro.
 templateEngineOverride: njk
 ---
-
-<header class="site-header">
-  <h1>Jonathan DeBarro</h1>
-  <p class="tagline">Need money FAST!</p>
-  <nav>
-    <a href="https://www.linkedin.com/in/jonathanmd/">LinkedIn</a>
-    <a href="https://github.com/jmdebarro">GitHub</a>
-  </nav>
-</header>
-
-<!-- Divider bar under header -->
-<div class="header-divider"></div>
-
-<main class="posts-wrapper">
-  <div class="posts-grid">
-    {% for post in collections.posts | reverse %}
-      <article class="post-card">
-        {% if post.data.image %}
-          <img src="{{ post.data.image }}" alt="{{ post.data.title }}" class="post-image">
-        {% else %}
-          <div class="post-image">GIF / Image Placeholder</div>
-        {% endif %}
-        <h2><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
-      </article>
-    {% endfor %}
-  </div>
-</main>
-
 <style>
-/* Header */
-.site-header {
-  text-align: center;
-  padding: 2rem 1rem; /* reduced from 3rem to 2rem to shrink space above the bar */
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-}
+  /* Collage band: the live ASCII collage, click anywhere to open it full screen */
+  .hero { position: relative; background: #000; height: min(72vh, 640px); min-height: 360px; overflow: hidden; }
+  .hero iframe { display: block; width: 100%; height: 100%; border: 0; pointer-events: none; }
+  .hero-open { position: absolute; inset: 0; cursor: zoom-in; }
+  .hero-bar { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; pointer-events: none; }
+  .hero-bar .fig { background: var(--ground); padding: 8px 12px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--muted); }
+  .hero-bar .btn { pointer-events: auto; }
+  @media (max-width: 600px) { .hero-bar .fig { display: none; } .hero-bar { justify-content: flex-end; } }
+  .hero-bar svg path { stroke: var(--accent); }
 
-.site-header h1 {
-  margin: 0.5rem 0;
-  font-size: 3rem;
-  color: #000; /* black title */
-}
+  .intro { padding-top: 72px; padding-bottom: 40px; }
+  .intro h1 { margin: 0; font-family: var(--display); font-weight: 500; font-size: clamp(56px, 9vw, 128px); line-height: 0.92; letter-spacing: -0.01em; text-wrap: balance; }
 
-.site-header nav a {
-  margin: 0 1rem;
-  color: #1da1f2; /* light blue links */
-  text-decoration: none;
-  font-weight: 500;
-}
+  .section { padding-top: 40px; padding-bottom: 40px; }
+  .section:last-of-type { padding-bottom: 96px; }
+  .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; border-bottom: 1px solid var(--line); padding-bottom: 16px; }
+  .section-head h2 { margin: 0; font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .section-head span { font-family: var(--mono); font-size: 13px; color: var(--muted); }
 
-.site-header nav a:hover {
-  text-decoration: underline;
-}
+  .post-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; align-items: center; padding: 40px 0; border-bottom: 1px solid var(--line); }
+  .post-row .framed img { height: 320px; }
+  .post-row .placeholder { height: 320px; border-radius: 8px; background: #0F0D0B; display: grid; place-items: center; font-family: var(--mono); font-size: 13px; color: var(--muted); }
+  .post-row .text { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .post-row .title { font-family: var(--display); font-weight: 600; font-size: 52px; line-height: 1; text-wrap: balance; }
+  .post-row .desc { font-size: 19px; line-height: 1.6; color: var(--text-soft); max-width: 520px; }
+  .post-row .more { font-family: var(--mono); font-size: 13px; letter-spacing: 0.08em; color: var(--accent); }
+  .post-row:hover .title { color: var(--accent); }
 
-.site-header .tagline {
-  margin-top: 0.5rem;
-  font-style: normal; /* remove italic */
-  color: #000; /* black tagline */
-}
-
-/* Divider under header */
-.header-divider {
-  width: 80%;
-  margin: 0 auto;
-  height: 4px;
-  background-color: #8b8a8a; /* subtle gray divider */
-  margin-bottom: 3rem;
-  border-radius: 2px;
-}
-
-/* Wrapper to center the grid */
-.posts-wrapper {
-  display: flex;
-  justify-content: center;
-}
-
-/* Grid with 3 columns, wider cards */
-.posts-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
-  width: 80vw; /* 4/5 of viewport width */
-}
-
-/* Individual post cards */
-.post-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  background-color: #ffffff;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.post-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-}
-
-/* Post image box */
-.post-image {
-  background-color: #f0f0f0;
-  height: 250px; /* taller */
-  margin-bottom: 1.5rem;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #aaa;
-  font-size: 0.95rem;
-  object-fit: cover;
-}
-
-.post-card img.post-image {
-  width: 100%;
-  height: 250px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.post-card h2 {
-  margin: 0;
-  font-size: 1.3rem;
-  color: #333;
-}
-
-.post-card a {
-  color: #337ab7;
-  text-decoration: none;
-}
-
-.post-card a:hover {
-  text-decoration: underline;
-}
-
-/* Responsive: collapse to 2/1 column on smaller screens */
-@media (max-width: 1100px) {
-  .posts-grid {
-    grid-template-columns: repeat(2, 1fr);
-    width: 90vw;
-  }
-}
-
-@media (max-width: 700px) {
-  .posts-grid {
-    grid-template-columns: 1fr;
-    width: 95vw;
-  }
-}
+  .projects { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+  .project { display: flex; flex-direction: column; gap: 10px; padding: 32px 32px 32px 0; border-bottom: 1px solid var(--line); }
+  .project .where { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  .project .name { font-family: var(--display); font-weight: 600; font-size: 36px; }
+  .project .desc { font-size: 17px; line-height: 1.55; color: var(--text-soft); }
+  .project:hover .name { color: var(--accent); }
 </style>
+
+<section class="hero" aria-label="ASCII collage">
+  <iframe src="/collage/?embed" title="ASCII collage of five paintings" tabindex="-1" aria-hidden="true"></iframe>
+  <a class="hero-open" href="/collage/" aria-label="Open the ASCII collage full screen"></a>
+  <div class="hero-bar">
+    <span class="fig">Glyphshift · five paintings, redrawn in ASCII</span>
+    <a class="btn" href="/collage/">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M8.5 1.5h4v4M5.5 12.5h-4v-4M12.5 1.5L8 6M1.5 12.5L6 8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Expand collage
+    </a>
+  </div>
+</section>
+
+<section class="wrap intro">
+  <h1>Jonathan DeBarro</h1>
+</section>
+
+<section id="writing" class="wrap section" aria-labelledby="writing-h">
+  <div class="section-head">
+    <h2 id="writing-h">Writing</h2>
+    <span>{{ collections.posts | length }} post{% if collections.posts | length != 1 %}s{% endif %}</span>
+  </div>
+  {% for post in collections.posts | reverse %}
+  <a class="post-row" href="{{ post.url }}">
+    {% if post.data.image %}
+      <div class="framed"><img src="{{ post.data.image }}" alt="{{ post.data.imageAlt or post.data.title }}" loading="lazy"></div>
+    {% else %}
+      <div class="framed"><div class="placeholder">no image</div></div>
+    {% endif %}
+    <div class="text">
+      <span class="label">{{ post.date | readableDate }}{% if post.data.topics %} · {{ post.data.topics }}{% endif %}</span>
+      <span class="title">{{ post.data.title }}</span>
+      {% if post.data.description %}<span class="desc">{{ post.data.description }}</span>{% endif %}
+      <span class="more">Read the post →</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+<section id="projects" class="wrap section" aria-labelledby="projects-h">
+  <div class="section-head">
+    <h2 id="projects-h">Projects</h2>
+  </div>
+  <div class="projects">
+    <a class="project" href="https://play.debarro.dev">
+      <span class="where">play.debarro.dev</span>
+      <span class="name">Scrabble</span>
+      <span class="desc">Scrabble you can play in the browser.</span>
+    </a>
+    <a class="project" href="/collage/">
+      <span class="where">debarro.dev/collage</span>
+      <span class="name">Glyphshift</span>
+      <span class="desc">Five paintings redrawn in ASCII. Characters walk to their new places as one image becomes the next.</span>
+    </a>
+  </div>
+</section>

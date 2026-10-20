@@ -3,14 +3,74 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/assets/favicon.ico">
     <title>{{ title }}</title>
+    {% if description %}<meta name="description" content="{{ description }}">{% endif %}
+    <link rel="icon" href="/assets/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=JetBrains+Mono:wght@400;500&display=swap">
+    <style>
+      /* Nocturne: warm black ground, bone text, one vermilion accent. */
+      :root {
+        --ground: #0B0A09;
+        --surface: #14120F;
+        --line: #2A2621;
+        --line-strong: #3A342D;
+        --text: #E8E0D0;
+        --text-soft: #C9C0B0;
+        --muted: #A39886;
+        --accent: #E8694A;
+        --display: "Cormorant Garamond", Georgia, serif;
+        --body: "Newsreader", Georgia, serif;
+        --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+        --gutter: clamp(16px, 4vw, 56px);
+        color-scheme: dark;
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; background: var(--ground); color: var(--text); }
+      body { font-family: var(--body); font-size: 19px; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+      a { color: var(--text); text-decoration: none; }
+      a:hover { color: var(--accent); }
+      a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+      img { max-width: 100%; }
+
+      .mono { font-family: var(--mono); }
+      .label { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+      .site-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 18px var(--gutter); border-bottom: 1px solid var(--line); }
+      .site-header .home { font-family: var(--mono); font-size: 14px; letter-spacing: 0.08em; padding: 12px 0; }
+      .site-header nav { display: flex; flex-wrap: wrap; gap: 28px; font-family: var(--mono); font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; }
+      .site-header nav a { padding: 12px 0; }
+      .site-header nav a.out { color: var(--muted); }
+
+      .wrap { width: 100%; max-width: 1200px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+
+      .site-footer { margin-top: auto; border-top: 1px solid var(--line); padding: 28px var(--gutter); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--muted); }
+
+      .framed { padding: 10px; background: var(--surface); border: 1px solid var(--line-strong); border-radius: 14px; box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.9); }
+      .framed img { display: block; width: 100%; object-fit: cover; border-radius: 8px; filter: grayscale(0.85) contrast(1.1) brightness(0.82); }
+
+      .btn { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 16px; background: var(--ground); border: 1px solid var(--line-strong); border-radius: 6px; color: var(--text); font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; }
+      .btn:hover { border-color: var(--accent); color: var(--text); }
+    </style>
+    {% if extraHead %}{{ extraHead | safe }}{% endif %}
   </head>
   <body>
-    {% if image %}
-      <img src="{{ image }}" alt="{{ title }}" style="max-width:100%; margin-bottom:2rem; border-radius:8px;">
-    {% endif %}
+    <header class="site-header">
+      <a class="home" href="/">debarro.dev</a>
+      <nav aria-label="Main">
+        <a href="/#writing">Writing</a>
+        <a href="/#projects">Projects</a>
+        <a class="out" href="https://www.linkedin.com/in/jonathanmd/">LinkedIn</a>
+        <a class="out" href="https://github.com/jmdebarro">GitHub</a>
+      </nav>
+    </header>
 
     {{ content | safe }}
+
+    <footer class="site-footer">
+      <span>© 2026 Jonathan DeBarro</span>
+      <span>('-')7</span>
+    </footer>
   </body>
 </html>
