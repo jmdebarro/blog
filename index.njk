@@ -5,15 +5,17 @@ description: Writing and projects by Jonathan DeBarro.
 templateEngineOverride: njk
 ---
 <style>
-  /* Collage band: the live ASCII collage; the button grows it in place */
-  .hero { position: relative; background: #000; height: min(72vh, 640px); min-height: 360px; overflow: hidden; transition: height 0.4s ease; }
-  .hero.expanded { height: 100vh; height: 100svh; }
-  .hero iframe { display: block; width: 100%; height: 100%; border: 0; pointer-events: none; }
+  /* Collage band: the live ASCII collage; the button grows it in place.
+     The iframe always renders at full screen size and is scaled by --k, so expanding never
+     makes the collage re-layout; the band's height and the scale animate together. */
+  .hero { --k: 0.72; position: relative; background: #000; height: calc(100svh * var(--k)); overflow: hidden; transition: height 0.4s ease; }
+  .hero.expanded { --k: 1 !important; }
+  .hero iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100svh; border: 0; pointer-events: none; transform-origin: top center; transform: scale(var(--k)); transition: transform 0.4s ease; }
   .hero-bar { position: absolute; right: var(--gutter); bottom: 20px; }
   .hero-bar .btn.icon { width: 44px; padding: 0; justify-content: center; cursor: pointer; }
   .hero .collapse, .hero.expanded .expand { display: none; }
   .hero.expanded .collapse { display: block; }
-  @media (prefers-reduced-motion: reduce) { .hero { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero, .hero iframe { transition: none; } }
   .hero-bar svg path { stroke: var(--accent); }
 
   .intro { padding-top: 72px; padding-bottom: 40px; }
@@ -52,7 +54,10 @@ templateEngineOverride: njk
   </div>
   <script>
     (() => {
-      const hero = document.querySelector('.hero'), btn = hero.querySelector('.hero-bar .btn');
+      const hero = document.querySelector('.hero'), frame = hero.querySelector('iframe'), btn = hero.querySelector('.hero-bar .btn');
+      // collapsed band: 72% of the screen, between 360px and 640px tall
+      const fit = () => { const vh = frame.clientHeight; hero.style.setProperty('--k', Math.min(1, Math.max(360, Math.min(vh * 0.72, 640)) / vh)); };
+      fit(); addEventListener('resize', fit);
       btn.addEventListener('click', () => {
         const open = hero.classList.toggle('expanded');
         btn.setAttribute('aria-expanded', open);
