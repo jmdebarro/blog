@@ -6,7 +6,8 @@ templateEngineOverride: njk
 ---
 <style>
   /* Collage band: the live ASCII collage; click it to open Glyphshift */
-  .hero { position: relative; background: #000; height: min(72vh, 640px); min-height: 360px; overflow: hidden; }
+  /* On narrow screens the collage crops each painting square, so the band is square too: no black bars */
+  .hero { position: relative; background: #000; height: min(72vh, 640px, 100vw); min-height: min(360px, 100vw); overflow: hidden; }
   .hero iframe { display: block; width: 100%; height: 100%; border: 0; pointer-events: none; }
   .hero-open { position: absolute; inset: 0; }
   .hero-open:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }

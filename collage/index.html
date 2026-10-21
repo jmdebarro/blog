@@ -214,6 +214,10 @@ function resize() {
    Cell empties: its glyph travels in a straight line to a nearby cell that newly fills.
    Nothing left to fill: it leaves off the nearest edge. Extra cells are fed from the nearest edge. */
 function plan(A, B) {
+  if (RM) {                                // reduced motion: nothing travels, the two images cross-fade in place
+    const still = (p, a0, a1) => ({ ch: p.ch, pc: p.pc, pm: p.pm, x0: p.c * cw, y0: p.r * rh, x1: p.c * cw, y1: p.r * rh, d: 0, vFrom: -1, vTo: 1e9, a0, a1 });
+    return [...A.map((p) => still(p, 1, 0)), ...B.map((p) => still(p, 0, 1))].sort((a, b) => colorOn ? a.pc - b.pc : a.pm - b.pm);
+  }
   const inA = new Map(A.map((p) => [p.r * cols + p.c, p])), inB = new Map(B.map((p) => [p.r * cols + p.c, p]));
   const leave = A.filter((p) => !inB.has(p.r * cols + p.c)), arrive = B.filter((p) => !inA.has(p.r * cols + p.c));
   const S = [], dl = () => RM ? 0 : Math.random() * SPREAD, dur = RM ? .001 : MOVE;
