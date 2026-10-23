@@ -1,8 +1,17 @@
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
+
 export default function (eleventyConfig) {
   // The collage is a finished, self-contained page: copy it as-is
   // instead of running it through a template engine.
   eleventyConfig.ignores.add("collage/**");
   eleventyConfig.addPassthroughCopy("collage");
+
+  // Short hash of the collage, added to its URL on the homepage so browsers
+  // fetch a fresh copy whenever the file changes.
+  eleventyConfig.addGlobalData("collageVersion", () =>
+    createHash("sha1").update(readFileSync("collage/index.html")).digest("hex").slice(0, 8)
+  );
 
   // Images, favicon and other static files.
   eleventyConfig.addPassthroughCopy("assets");
